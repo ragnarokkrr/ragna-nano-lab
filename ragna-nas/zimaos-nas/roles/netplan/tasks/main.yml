@@ -1,0 +1,15 @@
+---
+- name: Configure static IP (netplan)
+  copy:
+    dest: /etc/netplan/99-zimaos-static.yaml
+    content: |
+      network:
+        version: 2
+        ethernets:
+          {{ static_ip_config.interface }}:
+            addresses: [ {{ static_ip_config.address }} ]
+            gateway4: {{ static_ip_config.gateway }}
+            nameservers:
+              addresses: {{ static_ip_config.nameservers }}
+- name: Apply netplan
+  command: netplan apply

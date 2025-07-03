@@ -1,0 +1,14 @@
+---
+- name: Verify ZimaOS install
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Check if casaos binary exists
+      stat:
+        path: /etc/casaos
+      register: casaos_stat
+
+    - name: Assert CasaOS directory exists
+      assert:
+        that:
+          - casaos_stat.stat.exists

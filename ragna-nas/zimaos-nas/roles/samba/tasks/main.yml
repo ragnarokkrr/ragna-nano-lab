@@ -1,0 +1,29 @@
+---
+- name: Install Samba
+  apt:
+    name: samba
+    state: present
+
+- name: Create share folders
+  file:
+    path: "{{ item.path }}"
+    state: directory
+    mode: '0777'
+  loop: "{{ samba_shares }}"
+
+- name: Add share configs
+  blockinfile:
+    path: /etc/samba/smb.conf
+    marker: "; ANSIBLE MANAGED BLOCK - {{ item.name }}"
+    block: |
+      [{{ item.name }}]
+      path = {{ item.path }}
+      read only = no
+      guest ok = {{ item.guest_ok }}
+      force user = {{ ansible_user }}
+  loop: "{{ samba_shares }}"
+
+- name: Restart Samba
+  service:
+    name: smbd
+    state: restarted

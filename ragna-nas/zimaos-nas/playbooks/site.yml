@@ -1,0 +1,13 @@
+---
+- name: Full ZimaOS Site Configuration
+  hosts: all
+  become: true
+
+  roles:
+    - { role: docker, tags: [docker] }
+    - { role: zimaos, tags: [zimaos] }
+    - { role: portainer, tags: [portainer] }
+    - { role: netplan, tags: [netplan] }
+    - { role: samba, tags: [samba] }
+    - { role: zfs, tags: [zfs] }
+    - { role: firewall, tags: [firewall] }

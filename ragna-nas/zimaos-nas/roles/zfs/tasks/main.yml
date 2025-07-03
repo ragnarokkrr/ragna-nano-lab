@@ -1,0 +1,10 @@
+---
+- name: Install zfsutils
+  apt:
+    name: zfsutils-linux
+    state: present
+
+- name: Create ZFS pool
+  command: zpool create -f {{ zfs_pool_name }} {{ zfs_disk_device }}
+  args:
+    creates: "/{{ zfs_pool_name }}"

@@ -1,0 +1,5 @@
+---
+- name: Install CasaOS / ZimaOS
+  shell: curl -fsSL {{ casaos_install_script }} | bash
+  args:
+    executable: /bin/bash

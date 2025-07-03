@@ -1,0 +1,9 @@
+---
+- name: Harden system security
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Example hardening task
+      debug:
+        msg: "Apply SSH config, fail2ban, firewall rules"

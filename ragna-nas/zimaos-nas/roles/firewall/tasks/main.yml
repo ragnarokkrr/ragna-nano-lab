@@ -1,0 +1,20 @@
+---
+- name: Install UFW
+  apt:
+    name: ufw
+    state: present
+
+- name: Allow essential ports
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+  loop:
+    - 22
+    - 80
+    - 443
+    - "{{ portainer_port }}"
+
+- name: Enable UFW
+  ufw:
+    state: enabled
+    policy: deny

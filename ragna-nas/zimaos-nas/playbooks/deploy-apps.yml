@@ -1,0 +1,7 @@
+---
+- name: Deploy homelab applications
+  hosts: all
+  become: true
+
+  roles:
+    - { role: jellyfin, tags: [jellyfin] }
