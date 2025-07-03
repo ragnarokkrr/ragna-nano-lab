@@ -8,6 +8,4 @@
     - { role: zimaos, tags: [zimaos] }
     - { role: portainer, tags: [portainer] }
     - { role: netplan, tags: [netplan] }
-    - { role: samba, tags: [samba] }
-    - { role: zfs, tags: [zfs] }
     - { role: firewall, tags: [firewall] }
