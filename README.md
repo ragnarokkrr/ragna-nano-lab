@@ -1,10 +1,10 @@
-# RagnaHome Lab Project
+# RagnaNano Lab Project
 
 **An Ansible-driven, modular home lab automation framework for deploying and managing a self-hosted infrastructure.**
 
 ## 🧭 Project Overview
 
-RagnaHome Lab aims to provision and manage a modern homelab environment leveraging:
+RagnaNano Lab aims to provision and manage a modern homelab environment leveraging:
 - Ansible automation
 - Role-based modularity
 - Infrastructure-as-code principles

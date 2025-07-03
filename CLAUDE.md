@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-RagnaHome Lab is an Ansible-driven, modular home lab automation framework for deploying and managing self-hosted infrastructure. The project leverages:
+RagnaNano Lab is an Ansible-driven, modular home lab automation framework for deploying and managing self-hosted infrastructure. The project leverages:
 
 - Ansible automation with role-based modularity
 - Infrastructure-as-code principles
