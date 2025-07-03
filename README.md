@@ -24,27 +24,8 @@ Key goals include:
 ```text
 ragna-home-lab/
 ├── README.md
-├── inventories/
-│   ├── production/
-│   │   ├── hosts.ini
-│   │   └── group_vars/
-├── playbooks/
-│   ├── nas.yml
-│   ├── zimaos.yml
-│   └── common.yml
-├── roles/
-│   ├── base/
-│   ├── samba/
-│   ├── zfs/
-│   ├── avahi/
-│   ├── firewall/
-│   └── docker/
-├── vars/
-│   └── globals.yml
-├── files/
-├── templates/
-└── scripts/
-    └── init-ubuntu-server.sh
+├── ragna-iot/
+└── ragna-nas/
 ```
 
 ---
