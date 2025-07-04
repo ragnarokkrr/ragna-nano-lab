@@ -1,7 +1,7 @@
 Switch Provisioning Project
 ===========================
 
-Ansible playbooks for provisioning VLANs on Switch
+Ansible playbooks for provisioning VLANs on Network Managed  Switch
 
 - 3 VLANs:
   - ragna-lab-sidekick: Raspberry PI fleet

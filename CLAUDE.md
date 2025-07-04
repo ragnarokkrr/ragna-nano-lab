@@ -41,8 +41,8 @@ The main deployment (`site.yml`) provisions a complete ZimaOS-based system with:
 
 ### Phase 1 - Basic Rack Infrastructure
 - **GMKTec NucBox G9 NAS** - Primary NAS system
-- **Raspberry Pi Model 3 (x2)** - Helper activities and Docker swarm cluster
-- **D-Link DGS-1100-08V2** - Managed switch
+- **Raspberry Pi Model 3 (x2)** - CI/CD and dashboarding cluster
+- **D-Link DGS-1100-08V2** - Managed network switch
 - **GeeekPi DeskPi RackMate TT Mini Server Cabinet** - Rack infrastructure
 - **Glitfix 500W USB C Charger Station** - Power distribution
 
@@ -131,14 +131,17 @@ The default inventory is set to `inventories/g9/hosts.ini` in `ansible.cfg`. Tar
 - Optional Lubuntu desktop environment
 - Ansible and SSH support
 - Docker swarm cluster capabilities
-- Helper activities for the main lab infrastructure
+- Lightweight CI/CD and Dashboarding
+- Gitea + Woodpecker CI provisioning
+- Prometheus/Grafana dashboarding
 
 #### Router Provisioning (`ragna-router/`)
 - Raspberry Pi-based router setup
-- Ubuntu Server 24.04.2 LTS with optional Lubuntu
 - Ansible playbooks for router configuration
+- Status: TBD (To Be Determined)
 
 #### Switch VLAN Management (`ragna-switch/`)
+- Ansible playbooks for provisioning VLANs on managed network switch
 - VLAN provisioning for network segmentation
 - Three network segments:
   - `ragna-lab-sidekick`: Raspberry Pi fleet network
