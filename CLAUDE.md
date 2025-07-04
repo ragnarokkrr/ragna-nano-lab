@@ -58,7 +58,8 @@ The main deployment (`site.yml`) provisions a complete ZimaOS-based system with:
 
 - **Control Node**: Python 3.8+, Ansible 8+
 - **Target Nodes**: Ubuntu Server (24.04 LTS or newer) with SSH key-based access
-- **Setup**: `sudo apt update && sudo apt install -y ansible git`
+- **Testing Environment**: Vagrant for local Ansible provisioning testing
+- **Setup**: `sudo apt update && sudo apt install -y ansible git vagrant`
 
 ## Security Notes
 
@@ -104,6 +105,21 @@ ansible-playbook -i inventories/g9/hosts.ini playbooks/site.yml --check
 ```
 
 ### Testing
+
+#### Vagrant Testing
+```bash
+# Test Ansible provisioning locally with Vagrant
+vagrant up
+vagrant provision
+
+# SSH into test environment
+vagrant ssh
+
+# Destroy test environment
+vagrant destroy
+```
+
+#### Molecule Testing
 ```bash
 # Test individual roles with Molecule (from role directory)
 cd roles/zimaos/

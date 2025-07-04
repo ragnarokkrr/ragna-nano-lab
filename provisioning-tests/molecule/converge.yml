@@ -1,0 +1,31 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  gather_facts: true
+  
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: true
+        cache_valid_time: 600
+      
+    - name: Install Python3 and pip
+      apt:
+        name:
+          - python3
+          - python3-pip
+          - curl
+          - wget
+        state: present
+
+  tasks:
+    - name: Create test user
+      user:
+        name: testuser
+        shell: /bin/bash
+        create_home: true
+        
+    - name: Verify system is ready for Ansible roles
+      debug:
+        msg: "System is ready for testing Ansible roles"

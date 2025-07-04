@@ -28,14 +28,33 @@ Key goals include:
 
 ---
 
-## 👨‍💻 Development & Contributions
+## 🗺️ Roadmap
 
-This project is designed for iterative growth. To add a new service:
-1. Create a new role under `roles/<your_service>`
-2. Add corresponding tasks, handlers, templates
-3. Integrate it in a new or existing playbook
+### Phase 1 - Basic Infrastructure ✅
+- [ ] Basic rack infrastructure setup
+- [ ] GMKTec NucBox G9 NAS deployment
+- [ ] Raspberry Pi fleet provisioning
+- [ ] Network switch configuration
+- [ ] Power distribution system
 
-Feel free to fork and submit PRs.
+### Phase 2 - CI/CD & Monitoring 🚧
+- [] Docker Swarm cluster on Raspberry Pi fleet
+- [ ] Gitea + Woodpecker CI pipeline
+- [ ] Prometheus/Grafana monitoring stack
+- [ ] VLAN segmentation implementation
+- [ ] mDNS + hostname broadcasting
+
+### Phase 3 - Virtualization & Orchestration 📋
+- [ ] ProxMox virtualization on additional NucBox units
+- [ ] Kubernetes cluster deployment
+- [ ] Service mesh implementation
+- [ ] Network automation and management
+
+### Phase 4 - AI/ML Capabilities 🔮
+- [ ] Local LLM deployment
+- [ ] GPU acceleration setup
+- [ ] ML pipeline integration
+- [ ] Edge AI workload management
 
 ---
 
@@ -45,6 +64,6 @@ MIT License. See [LICENSE](./LICENSE).
 
 ---
 
-## 📞 Support / Contact
+## 📞 Contact
 
-Open issues or contact via email at `your.email@domain.com`.
+Open issues or contact via email at `ragnarokkrr@gmail.com`.

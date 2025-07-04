@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # Base box - Ubuntu 24.04 LTS
+  config.vm.box = "ubuntu/jammy64"
+  config.vm.box_version = "~> 20241002.0.0"
+
+  # Raspberry Pi Fleet Simulation - Multiple VMs for Docker Swarm testing
+  (1..2).each do |i|
+    config.vm.define "pi-node-#{i}" do |node|
+      node.vm.hostname = "pi-node-#{i}"
+      node.vm.network "private_network", ip: "192.168.56.#{10 + i}"
+      
+      # Resource allocation to simulate Raspberry Pi 3 limitations
+      node.vm.provider "virtualbox" do |vb|
+        vb.memory = "1024"  # 1GB RAM (Pi 3 has 1GB)
+        vb.cpus = 1         # Single core simulation
+        vb.name = "ragna-lab-sidekick-pi-#{i}"
+      end
+      
+      # Provision with Ansible on the last node
+      if i == 2
+        node.vm.provision "ansible" do |ansible|
+          ansible.playbook = "../../ragna-lab-sidekick/playbook.yml"
+          ansible.inventory_path = "inventory.ini"
+          ansible.limit = "all"
+          ansible.verbose = "v"
+          ansible.extra_vars = {
+            ansible_python_interpreter: "/usr/bin/python3"
+          }
+        end
+      end
+    end
+  end
+
+  # Shared provisioning for all nodes
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y python3 python3-pip
+    # Simulate Pi environment
+    echo "ragna-lab-sidekick test environment" > /etc/motd
+  SHELL
+end

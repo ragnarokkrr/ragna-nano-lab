@@ -1,0 +1,25 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+platforms:
+  - name: test-instance
+    box: ubuntu/jammy64
+    box_version: "~> 20241002.0.0"
+    memory: 2048
+    cpus: 2
+    networks:
+      - name: private_network
+        type: static
+        ip: 192.168.56.200
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      test-instance:
+        ansible_python_interpreter: /usr/bin/python3
+verifier:
+  name: ansible

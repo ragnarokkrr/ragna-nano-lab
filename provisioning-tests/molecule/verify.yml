@@ -1,0 +1,41 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Verify Python3 is installed
+      command: python3 --version
+      register: python_version
+      changed_when: false
+      
+    - name: Assert Python3 version
+      assert:
+        that:
+          - python_version.rc == 0
+        fail_msg: "Python3 is not properly installed"
+        success_msg: "Python3 is correctly installed"
+        
+    - name: Verify curl is installed
+      command: curl --version
+      register: curl_version
+      changed_when: false
+      
+    - name: Assert curl is available
+      assert:
+        that:
+          - curl_version.rc == 0
+        fail_msg: "curl is not installed"
+        success_msg: "curl is available"
+        
+    - name: Check if testuser exists
+      getent:
+        database: passwd
+        key: testuser
+      register: testuser_check
+      
+    - name: Assert testuser was created
+      assert:
+        that:
+          - testuser_check is succeeded
+        fail_msg: "testuser was not created"
+        success_msg: "testuser exists"
