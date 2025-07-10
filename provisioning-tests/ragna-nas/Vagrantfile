@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
     
     # Provision with Ansible
     nas.vm.provision "ansible" do |ansible|
-      ansible.playbook = "../../ragna-nas/zimaos-nas/playbooks/site.yml"
+      ansible.playbook = "../../bare-metal/ragna-nas/zimaos-nas/playbooks/site.yml"
       ansible.inventory_path = "inventory.ini"
       ansible.verbose = "v"
       ansible.extra_vars = {

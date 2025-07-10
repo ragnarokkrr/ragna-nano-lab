@@ -48,15 +48,15 @@ vagrant up
 ### Deploy to Hardware
 ```bash
 # Configure your inventory
-cp ragna-nas/zimaos-nas/inventories/g9/hosts.ini.example hosts.ini
+cp bare-metal/ragna-nas/zimaos-nas/inventories/g9/hosts.ini.example hosts.ini
 vim hosts.ini  # Add your hardware IPs
 
 # Deploy NAS infrastructure
-cd ragna-nas/zimaos-nas
+cd bare-metal/ragna-nas/zimaos-nas
 ansible-playbook -i inventories/g9/hosts.ini playbooks/site.yml
 
 # Deploy Pi fleet
-cd ../../ragna-lab-sidekick
+cd ../../bare-metal/ragna-lab-sidekick
 ansible-playbook -i inventory.ini playbook.yml
 ```
 
@@ -68,15 +68,16 @@ ragna-nano-lab/
 ├── 📋 CLAUDE.md                    # Claude Code documentation
 ├── 📋 LICENSE                      # MIT License
 ├── 📋 Lab-Hardware-Inventory.md    # Hardware specifications
-├── 🏠 ragna-nas/                   # NAS deployment
-│   └── zimaos-nas/                 # ZimaOS Ansible automation
-│       ├── playbooks/              # Main deployment playbooks
-│       ├── roles/                  # Reusable Ansible roles
-│       └── inventories/            # Environment configurations
-├── 🤖 ragna-lab-sidekick/          # Raspberry Pi fleet
-│   └── README.md                   # Pi deployment guide
-├── 🌐 ragna-router/                # Router configuration
-├── 🔀 ragna-switch/                # Switch VLAN management
+├── 🏠 bare-metal/                  # Physical infrastructure
+│   ├── ragna-nas/                  # NAS deployment
+│   │   └── zimaos-nas/             # ZimaOS Ansible automation
+│   │       ├── playbooks/          # Main deployment playbooks
+│   │       ├── roles/              # Reusable Ansible roles
+│   │       └── inventories/        # Environment configurations
+│   ├── ragna-lab-sidekick/         # Raspberry Pi fleet
+│   │   └── README.md               # Pi deployment guide
+│   ├── ragna-router/               # Router configuration
+│   └── ragna-switch/               # Switch VLAN management
 ├── 💻 ragna-virtua/                # Virtualization layer
 └── 🧪 provisioning-tests/          # Testing infrastructure
     ├── ragna-nas/                  # NAS testing (3-disk setup)
@@ -156,7 +157,7 @@ cd provisioning-tests
 ./run-all-tests.sh
 
 # Lint Ansible playbooks
-ansible-lint ragna-nas/zimaos-nas/playbooks/
+ansible-lint bare-metal/ragna-nas/zimaos-nas/playbooks/
 
 # Verify role syntax
 ansible-playbook --syntax-check playbooks/site.yml

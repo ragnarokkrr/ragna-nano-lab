@@ -243,7 +243,7 @@ nas_gateway=192.168.1.1
 ### 1. Test Connectivity
 
 ```bash
-cd ragna-nas/zimaos-nas
+cd bare-metal/ragna-nas/zimaos-nas
 
 # Test Ansible connectivity
 ansible all -i inventories/production/hosts.ini -m ping

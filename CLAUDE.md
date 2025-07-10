@@ -14,19 +14,19 @@ RagnaNano Lab is an Ansible-driven, modular home lab automation framework for de
 - Power-efficient nodes: GMKTec NucBox, Raspberry Pi 3B
 
 Project structure:
-- `ragna-nas/zimaos-nas/` - Ansible playbooks and roles for NAS deployment
-- `ragna-lab-sidekick/` - Raspberry Pi 3 fleet provisioning for helper activities
-- `ragna-router/` - Router provisioning using Raspberry Pi with Ubuntu Server 24.04.2 LTS
-- `ragna-switch/` - Switch VLAN provisioning for network segmentation
+- `bare-metal/ragna-nas/zimaos-nas/` - Ansible playbooks and roles for NAS deployment
+- `bare-metal/ragna-lab-sidekick/` - Raspberry Pi 3 fleet provisioning for helper activities
+- `bare-metal/ragna-router/` - Router provisioning using Raspberry Pi with Ubuntu Server 24.04.2 LTS
+- `bare-metal/ragna-switch/` - Switch VLAN provisioning for network segmentation
 
 ## Architecture
 
 The project follows Infrastructure-as-Code principles using Ansible with a role-based modular structure:
 
 ### Key Components
-- **Ansible Roles**: Located in `ragna-nas/zimaos-nas/roles/` - each role handles specific services (docker, zimaos, portainer, netplan, firewall, lubuntu)
-- **Inventories**: Environment-specific configurations in `ragna-nas/zimaos-nas/inventories/` (g9, homelab)
-- **Playbooks**: Main orchestration files in `ragna-nas/zimaos-nas/playbooks/`
+- **Ansible Roles**: Located in `bare-metal/ragna-nas/zimaos-nas/roles/` - each role handles specific services (docker, zimaos, portainer, netplan, firewall, lubuntu)
+- **Inventories**: Environment-specific configurations in `bare-metal/ragna-nas/zimaos-nas/inventories/` (g9, homelab)
+- **Playbooks**: Main orchestration files in `bare-metal/ragna-nas/zimaos-nas/playbooks/`
 - **Variables**: Global and group-specific variables in `group_vars/` and `vars/`
 
 ### Service Stack
@@ -82,7 +82,7 @@ Feel free to fork and submit PRs.
 ### Ansible Operations
 ```bash
 # Navigate to the main Ansible directory
-cd ragna-nas/zimaos-nas/
+cd bare-metal/ragna-nas/zimaos-nas/
 
 # Run the complete site deployment
 ansible-playbook -i inventories/g9/hosts.ini playbooks/site.yml

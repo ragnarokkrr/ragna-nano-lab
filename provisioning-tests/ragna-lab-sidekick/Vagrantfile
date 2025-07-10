@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
       # Provision with Ansible on the last node
       if i == 2
         node.vm.provision "ansible" do |ansible|
-          ansible.playbook = "../../ragna-lab-sidekick/playbook.yml"
+          ansible.playbook = "../../bare-metal/ragna-lab-sidekick/playbook.yml"
           ansible.inventory_path = "inventory.ini"
           ansible.limit = "all"
           ansible.verbose = "v"

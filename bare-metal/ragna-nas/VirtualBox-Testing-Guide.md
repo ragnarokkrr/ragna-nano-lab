@@ -199,10 +199,10 @@ Create a dedicated inventory file for VirtualBox testing:
 
 ```bash
 # In your ragna-nas project directory
-mkdir -p ragna-nas/zimaos-nas/inventories/virtualbox
+mkdir -p bare-metal/ragna-nas/zimaos-nas/inventories/virtualbox
 ```
 
-Create `ragna-nas/zimaos-nas/inventories/virtualbox/hosts.ini`:
+Create `bare-metal/ragna-nas/zimaos-nas/inventories/virtualbox/hosts.ini`:
 ```ini
 [nas_servers]
 nas-test-vm ansible_host=192.168.1.150 ansible_user=ansible
@@ -230,7 +230,7 @@ nas-test-vm ansible_host=localhost ansible_port=2222 ansible_user=ansible
 ### 2. Test Ansible Connectivity
 
 ```bash
-cd ragna-nas/zimaos-nas
+cd bare-metal/ragna-nas/zimaos-nas
 
 # Test connection
 ansible all -i inventories/virtualbox/hosts.ini -m ping

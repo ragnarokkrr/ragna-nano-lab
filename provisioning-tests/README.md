@@ -273,7 +273,7 @@ ansible all -i inventory.ini -m setup -vvv
 
 The testing infrastructure is designed to work seamlessly with the main RagnaNano Lab project:
 
-- Vagrantfiles reference actual Ansible playbooks from `../ragna-nas/` and `../ragna-lab-sidekick/`
+- Vagrantfiles reference actual Ansible playbooks from `../bare-metal/ragna-nas/` and `../bare-metal/ragna-lab-sidekick/`
 - Inventory files use standard Ansible conventions
 - Test results validate real deployment scenarios
 - Failed tests indicate issues that would occur in production
