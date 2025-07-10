@@ -1,0 +1,21 @@
+---
+- name: restart systemd
+  systemd:
+    daemon_reload: true
+  become: true
+
+- name: reload systemd
+  systemd:
+    daemon_reload: true
+  become: true
+
+- name: restart vncserver
+  systemd:
+    name: "vncserver@1.service"
+    state: restarted
+    daemon_reload: true
+  become: true
+
+- name: update grub
+  command: update-grub
+  become: true

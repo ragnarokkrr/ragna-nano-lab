@@ -1,1 +1,27 @@
 ## Common defaults for all hosts
+
+# Lubuntu Desktop Configuration
+# Set to true to install Lubuntu desktop environment
+lubuntu_enable: false
+
+# Auto-start GUI on boot (true) or manual start (false)
+# CRITICAL: Setting to false ensures server stays in console mode
+# GUI can be started manually when needed via 'startx' or scripts
+lubuntu_auto_start: false
+
+# Enable VNC server for remote desktop access
+lubuntu_vnc_enable: false
+
+# VNC password (change this for security)
+lubuntu_vnc_password: "ragna123"
+
+# Additional packages to install with Lubuntu
+lubuntu_additional_packages:
+  - firefox
+  - vim
+  - htop
+  - tree
+  - wget
+  - curl
+  - git
+  - file-manager-actions

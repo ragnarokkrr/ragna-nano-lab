@@ -1,0 +1,36 @@
+---
+# Lubuntu role default variables
+
+# Enable/disable Lubuntu installation
+lubuntu_enable: false
+
+# Auto-start GUI on boot (true) or manual start (false)
+# IMPORTANT: When false, guarantees console-only boot for server operation
+lubuntu_auto_start: false
+
+# Additional packages to install with Lubuntu
+lubuntu_additional_packages:
+  - firefox
+  - vim
+  - htop
+  - tree
+  - wget
+  - curl
+  - git
+  - file-manager-actions
+  - synaptic
+  - gdebi
+
+# VNC server configuration
+lubuntu_vnc_enable: false
+lubuntu_vnc_password: "ragna123"
+lubuntu_vnc_packages:
+  - tightvncserver
+  - xfonts-base
+
+# Desktop environment preferences
+lubuntu_remove_games: true
+lubuntu_remove_office: false
+
+# System resources and performance
+lubuntu_optimize_for_low_memory: true

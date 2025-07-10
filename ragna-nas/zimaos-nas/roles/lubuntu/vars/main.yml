@@ -1,0 +1,28 @@
+---
+# Lubuntu role variables
+# These variables can be overridden in group_vars or host_vars
+
+# Package lists for different Ubuntu versions
+lubuntu_packages_focal:
+  - lubuntu-desktop
+  - lightdm
+  - lightdm-gtk-greeter
+
+lubuntu_packages_jammy:
+  - lubuntu-desktop
+  - lightdm
+  - lightdm-gtk-greeter
+
+# Performance optimization packages
+lubuntu_performance_packages:
+  - preload
+  - zram-config
+
+# Development packages (optional)
+lubuntu_dev_packages:
+  - git
+  - vim
+  - curl
+  - wget
+  - htop
+  - tree

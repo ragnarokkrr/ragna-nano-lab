@@ -9,3 +9,4 @@
     - { role: portainer, tags: [portainer] }
     - { role: netplan, tags: [netplan] }
     - { role: firewall, tags: [firewall] }
+    - { role: lubuntu, tags: [lubuntu, desktop] }

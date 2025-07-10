@@ -1,0 +1,59 @@
+---
+# Additional verification tasks to ensure console mode
+- name: Verify multi-user target is default
+  command: systemctl get-default
+  register: default_target
+  changed_when: false
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+
+- name: Assert multi-user target is default
+  assert:
+    that:
+      - default_target.stdout == "multi-user.target"
+    fail_msg: "Default target is not multi-user.target"
+    success_msg: "Console mode correctly configured"
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+
+- name: Verify lightdm service is disabled
+  command: systemctl is-enabled lightdm.service
+  register: lightdm_status
+  changed_when: false
+  failed_when: false
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+
+- name: Assert lightdm service is disabled
+  assert:
+    that:
+      - lightdm_status.stdout == "disabled"
+    fail_msg: "lightdm service is not disabled"
+    success_msg: "Display manager correctly disabled"
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+
+- name: Check if graphical target is disabled
+  command: systemctl is-enabled graphical.target
+  register: graphical_status
+  changed_when: false
+  failed_when: false
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+
+- name: Display console mode status
+  debug:
+    msg: |
+      Console mode verification:
+      - Default target: {{ default_target.stdout | default('unknown') }}
+      - LightDM status: {{ lightdm_status.stdout | default('unknown') }}
+      - Graphical target: {{ graphical_status.stdout | default('unknown') }}
+      - System will boot to console mode
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)

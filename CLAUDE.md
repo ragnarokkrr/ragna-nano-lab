@@ -24,7 +24,7 @@ Project structure:
 The project follows Infrastructure-as-Code principles using Ansible with a role-based modular structure:
 
 ### Key Components
-- **Ansible Roles**: Located in `ragna-nas/zimaos-nas/roles/` - each role handles specific services (docker, zimaos, portainer, netplan, firewall)
+- **Ansible Roles**: Located in `ragna-nas/zimaos-nas/roles/` - each role handles specific services (docker, zimaos, portainer, netplan, firewall, lubuntu)
 - **Inventories**: Environment-specific configurations in `ragna-nas/zimaos-nas/inventories/` (g9, homelab)
 - **Playbooks**: Main orchestration files in `ragna-nas/zimaos-nas/playbooks/`
 - **Variables**: Global and group-specific variables in `group_vars/` and `vars/`
@@ -36,6 +36,7 @@ The main deployment (`site.yml`) provisions a complete ZimaOS-based system with:
 - Portainer for container management
 - Network configuration via Netplan
 - UFW firewall rules
+- Optional Lubuntu desktop environment with VNC support
 
 ## Hardware Inventory
 
@@ -89,6 +90,7 @@ ansible-playbook -i inventories/g9/hosts.ini playbooks/site.yml
 # Run specific roles with tags
 ansible-playbook -i inventories/g9/hosts.ini playbooks/site.yml --tags docker
 ansible-playbook -i inventories/g9/hosts.ini playbooks/site.yml --tags zimaos,portainer
+ansible-playbook -i inventories/g9/hosts.ini playbooks/site.yml --tags lubuntu
 
 # Deploy to different environments
 ansible-playbook -i inventories/homelab/hosts.ini playbooks/site.yml

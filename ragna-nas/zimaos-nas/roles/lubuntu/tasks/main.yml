@@ -1,0 +1,199 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: true
+    cache_valid_time: 600
+  become: true
+
+- name: Install tasksel package
+  apt:
+    name: tasksel
+    state: present
+  become: true
+
+- name: Install Lubuntu desktop environment
+  shell: tasksel install lubuntu-desktop
+  become: true
+  register: lubuntu_install
+  changed_when: lubuntu_install.rc == 0
+  when: lubuntu_enable | default(false)
+
+- name: Disable graphical target service
+  systemd:
+    name: graphical.target
+    enabled: false
+  become: true
+  when: lubuntu_enable | default(false)
+
+- name: Disable display manager service (lightdm)
+  systemd:
+    name: lightdm.service
+    enabled: false
+    state: stopped
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+  ignore_errors: true
+
+- name: Set default target to multi-user (console mode)
+  command: systemctl set-default multi-user.target
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+  notify: restart systemd
+
+- name: Enable display manager service (lightdm) for auto-start
+  systemd:
+    name: lightdm.service
+    enabled: true
+    state: started
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - lubuntu_auto_start | default(true)
+
+- name: Set default target to graphical (auto-start GUI)
+  command: systemctl set-default graphical.target
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - lubuntu_auto_start | default(true)
+  notify: restart systemd
+
+- name: Ensure console mode is enforced (additional safety)
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT='
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash systemd.unit=multi-user.target"'
+    backup: true
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+  notify: update grub
+
+- name: Remove console mode enforcement for auto-start GUI
+  lineinfile:
+    path: /etc/default/grub
+    regexp: '^GRUB_CMDLINE_LINUX_DEFAULT=.*systemd\.unit=multi-user\.target.*'
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"'
+    backup: true
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - lubuntu_auto_start | default(true)
+  notify: update grub
+
+- name: Install additional desktop utilities
+  apt:
+    name: "{{ lubuntu_additional_packages }}"
+    state: present
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - lubuntu_additional_packages is defined
+
+- name: Create desktop shortcut for starting GUI manually
+  template:
+    src: start-gui.desktop.j2
+    dest: /home/{{ ansible_user }}/Desktop/start-gui.desktop
+    mode: '0755'
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+
+- name: Create GUI startup script
+  template:
+    src: start-gui.sh.j2
+    dest: /usr/local/bin/start-gui
+    mode: '0755'
+    owner: root
+    group: root
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+
+- name: Install VNC server for remote desktop access
+  apt:
+    name: "{{ lubuntu_vnc_packages }}"
+    state: present
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - lubuntu_vnc_enable | default(false)
+
+- name: Configure VNC server
+  template:
+    src: vncserver.service.j2
+    dest: /etc/systemd/system/vncserver@.service
+    mode: '0644'
+    owner: root
+    group: root
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - lubuntu_vnc_enable | default(false)
+  notify:
+    - reload systemd
+    - restart vncserver
+
+- name: Create VNC password for ansible user
+  shell: |
+    mkdir -p /home/{{ ansible_user }}/.vnc
+    echo "{{ lubuntu_vnc_password | default('ragna123') }}" | vncpasswd -f > /home/{{ ansible_user }}/.vnc/passwd
+    chmod 600 /home/{{ ansible_user }}/.vnc/passwd
+    chown -R {{ ansible_user }}:{{ ansible_user }} /home/{{ ansible_user }}/.vnc
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - lubuntu_vnc_enable | default(false)
+
+- name: Enable and start VNC server
+  systemd:
+    name: "vncserver@1.service"
+    enabled: true
+    state: started
+    daemon_reload: true
+  become: true
+  when: 
+    - lubuntu_enable | default(false)
+    - lubuntu_vnc_enable | default(false)
+
+- name: Verify console mode configuration
+  include_tasks: verify-console-mode.yml
+  when: 
+    - lubuntu_enable | default(false)
+    - not lubuntu_auto_start | default(false)
+
+- name: Display GUI startup instructions
+  debug:
+    msg: |
+      Lubuntu desktop has been installed.
+      {% if not lubuntu_auto_start | default(false) %}
+      
+      *** CONSOLE MODE CONFIGURED ***
+      System will boot to console (no GUI auto-start)
+      
+      To start the GUI manually:
+        - Locally: run 'sudo systemctl start graphical.target' or use the desktop shortcut
+        - Script: run '/usr/local/bin/start-gui'
+        - Command: run 'startx' as the user
+      
+      To permanently enable GUI auto-start:
+        Set lubuntu_auto_start: true and re-run the playbook
+      {% else %}
+      
+      *** AUTO-START MODE CONFIGURED ***
+      The GUI will start automatically on boot.
+      {% endif %}
+      {% if lubuntu_vnc_enable | default(false) %}
+      
+      VNC server is available on port 5901 (display :1)
+      Connect with: vncviewer {{ ansible_host }}:5901
+      {% endif %}
+  when: lubuntu_enable | default(false)

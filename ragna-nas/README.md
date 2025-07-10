@@ -385,11 +385,30 @@ sudo systemctl disable unnecessary-service
 4. **Security Hardening**: Implement additional security measures
 5. **Service Integration**: Connect with Pi fleet for CI/CD
 
+## 🧪 Testing Options
+
+### Automated Testing with Vagrant
+For automated testing and CI/CD integration, see the [provisioning-tests](../provisioning-tests/README.md) directory which includes Vagrant-based testing with 3-disk NAS simulation.
+
+### Manual Testing with VirtualBox
+For detailed manual testing, debugging, and experimentation with existing Ubuntu Server images, see [VirtualBox-Testing-Guide.md](VirtualBox-Testing-Guide.md). This guide covers:
+
+- Setting up VirtualBox VMs from existing Ubuntu Server images
+- Configuring 3-disk storage simulation
+- Manual Ansible deployment testing
+- Debugging and troubleshooting procedures
+- Custom configuration testing scenarios
+
+**When to use each approach:**
+- **Vagrant**: Automated testing, standardized environments, CI/CD pipelines
+- **VirtualBox Manual**: Debugging issues, testing custom configurations, educational purposes
+
 ## 🔗 Related Documentation
 
 - [Main Project README](../README.md)
 - [Hardware Inventory](../Lab-Hardware-Inventory.md)  
 - [Testing Infrastructure](../provisioning-tests/README.md)
+- [VirtualBox Testing Guide](VirtualBox-Testing-Guide.md)
 - [CLAUDE.md](../CLAUDE.md) for technical details
 - [ZimaOS Documentation](https://zimaos.io/docs/)
 - [Portainer Documentation](https://docs.portainer.io/)
