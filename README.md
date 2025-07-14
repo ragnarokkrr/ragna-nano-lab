@@ -78,12 +78,12 @@ ragna-nano-lab/
 │   │   └── README.md               # Pi deployment guide
 │   ├── ragna-router/               # Router configuration
 │   ├── ragna-switch/               # Switch VLAN management
+│   ├── 💻 ragna-proxmox/           # ProxMox virtualization layer
 │   └── 🧪 provisioning-tests/      # Testing infrastructure
 │       ├── ragna-nas/              # NAS testing (3-disk setup)
 │       ├── ragna-lab-sidekick/     # Pi fleet testing
 │       ├── molecule/               # Molecule test framework
 │       └── run-all-tests.sh       # Automated test runner
-└── 💻 ragna-virtua/                # Virtualization layer
 ```
 
 ---

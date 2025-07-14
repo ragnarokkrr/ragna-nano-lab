@@ -10,7 +10,7 @@ RagnaNano Lab is an Ansible-driven, modular home lab automation framework for de
 - Infrastructure-as-code principles
 - Support for NUCs, Raspberry Pi, and VM clusters
 - Docker-based service orchestration (ZimaOS, Portainer)
-- Network segmentation with VLANs and mDNS support (3 VLANs: ragna-lab-sidekick, ragna-nas, ragna-virtua)
+- Network segmentation with VLANs and mDNS support (3 VLANs: ragna-lab-sidekick, ragna-nas, ragna-proxmox)
 - Power-efficient nodes: GMKTec NucBox, Raspberry Pi 3B
 
 Project structure:
@@ -18,6 +18,8 @@ Project structure:
 - `bare-metal/ragna-lab-sidekick/` - Raspberry Pi 3 fleet provisioning for helper activities
 - `bare-metal/ragna-router/` - Router provisioning using Raspberry Pi with Ubuntu Server 24.04.2 LTS
 - `bare-metal/ragna-switch/` - Switch VLAN provisioning for network segmentation
+- `bare-metal/ragna-proxmox/` - ProxMox virtualization and Kubernetes orchestration
+- `bare-metal/provisioning-tests/` - Vagrant-based testing infrastructure for validation
 
 ## Architecture
 
@@ -110,9 +112,15 @@ ansible-playbook -i inventories/g9/hosts.ini playbooks/site.yml --check
 
 #### Vagrant Testing
 ```bash
-# Test Ansible provisioning locally with Vagrant
-vagrant up
-vagrant provision
+# Navigate to testing directory
+cd bare-metal/provisioning-tests
+
+# Test specific components
+cd ragna-nas && vagrant up
+cd ragna-lab-sidekick && vagrant up
+
+# Run all tests
+./run-all-tests.sh
 
 # SSH into test environment
 vagrant ssh
@@ -164,7 +172,20 @@ The default inventory is set to `inventories/g9/hosts.ini` in `ansible.cfg`. Tar
 - Three network segments:
   - `ragna-lab-sidekick`: Raspberry Pi fleet network
   - `ragna-nas`: NAS and storage network
-  - `ragna-virtua`: Virtualization and Kubernetes layer network
+  - `ragna-proxmox`: ProxMox virtualization and Kubernetes layer network
+
+#### ProxMox Virtualization (`ragna-proxmox/`)
+- ProxMox VE virtualization platform deployment
+- Kubernetes cluster orchestration
+- VM and container management
+- High availability and clustering
+- Status: Planned for Phase 2
+
+#### Testing Infrastructure (`provisioning-tests/`)
+- Vagrant-based local testing environment
+- Multi-component validation with VirtualBox
+- Molecule framework for individual role testing
+- Automated test runner for CI/CD integration
 
 ### Inventory Management
 - Production environment: `inventories/g9/`
