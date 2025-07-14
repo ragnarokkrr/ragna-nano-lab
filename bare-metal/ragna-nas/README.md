@@ -18,16 +18,16 @@ The RagnaNano NAS serves as the central storage and services hub for the homelab
 
 - **GMKTec NucBox G9** (or compatible mini PC)
   - Intel processor with virtualization support
-  - Minimum 8GB RAM (16GB+ recommended)
-  - 2x NVMe SSD slots for storage
+  - 12GB RAM
+  - 3x 4TB NVMe 2280 SSD slots for storage
   - Gigabit Ethernet port
   - Multiple USB ports for external storage
 
 ### Storage Configuration
 
-**Recommended Setup:**
-- **Primary Drive**: 256GB+ NVMe SSD for OS and applications
-- **Storage Drive(s)**: 1TB+ NVMe SSD(s) for data storage
+**Current Hardware Setup:**
+- **Storage Drives**: 3x 4TB NVMe 2280 SSDs for ZFS storage pool
+- **OS Installation**: Installed on first SSD with remaining space for storage
 - **Optional**: External USB drives for backup/cold storage
 
 ## 🚀 Initial Hardware Setup
@@ -35,8 +35,9 @@ The RagnaNano NAS serves as the central storage and services hub for the homelab
 ### 1. Hardware Assembly
 
 1. **Install NVMe SSDs**
-   - Install primary OS drive in M.2 slot 1
-   - Install storage drive in M.2 slot 2 (if using dual drives)
+   - Install first 4TB NVMe SSD in M.2 slot 1 (OS + storage)
+   - Install second 4TB NVMe SSD in M.2 slot 2
+   - Install third 4TB NVMe SSD in M.2 slot 3
 
 2. **Connect Peripherals**
    - Connect monitor, keyboard, mouse for initial setup

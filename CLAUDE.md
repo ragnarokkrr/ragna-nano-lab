@@ -41,7 +41,7 @@ The main deployment (`site.yml`) provisions a complete ZimaOS-based system with:
 ## Hardware Inventory
 
 ### Phase 1 - Basic Rack Infrastructure
-- **GMKTec NucBox G9 NAS** - Primary NAS system
+- **GMKTec NucBox G9 NAS** - Primary NAS system (12GB RAM, 3x 4TB NVMe 2280 SSDs)
 - **Raspberry Pi Model 3 (x2)** - CI/CD and dashboarding cluster
 - **D-Link DGS-1100-08V2** - Managed network switch
 - **GeeekPi DeskPi RackMate TT Mini Server Cabinet** - Rack infrastructure

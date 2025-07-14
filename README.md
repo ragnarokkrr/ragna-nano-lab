@@ -37,11 +37,11 @@ cd ragna-nano-lab
 ### Test Before Deploy
 ```bash
 # Test with Vagrant (recommended)
-cd provisioning-tests
+cd bare-metal/provisioning-tests
 ./run-all-tests.sh
 
 # Or test individual components
-cd provisioning-tests/ragna-nas
+cd bare-metal/provisioning-tests/ragna-nas
 vagrant up
 ```
 
@@ -77,13 +77,13 @@ ragna-nano-lab/
 │   ├── ragna-lab-sidekick/         # Raspberry Pi fleet
 │   │   └── README.md               # Pi deployment guide
 │   ├── ragna-router/               # Router configuration
-│   └── ragna-switch/               # Switch VLAN management
-├── 💻 ragna-virtua/                # Virtualization layer
-└── 🧪 provisioning-tests/          # Testing infrastructure
-    ├── ragna-nas/                  # NAS testing (3-disk setup)
-    ├── ragna-lab-sidekick/         # Pi fleet testing
-    ├── molecule/                   # Molecule test framework
-    └── run-all-tests.sh           # Automated test runner
+│   ├── ragna-switch/               # Switch VLAN management
+│   └── 🧪 provisioning-tests/      # Testing infrastructure
+│       ├── ragna-nas/              # NAS testing (3-disk setup)
+│       ├── ragna-lab-sidekick/     # Pi fleet testing
+│       ├── molecule/               # Molecule test framework
+│       └── run-all-tests.sh       # Automated test runner
+└── 💻 ragna-virtua/                # Virtualization layer
 ```
 
 ---
@@ -139,7 +139,7 @@ This project includes comprehensive testing infrastructure:
 - **Multi-disk Testing**: 3-disk NAS configuration testing
 - **Network Simulation**: VLAN and multi-node testing
 
-See [provisioning-tests/README.md](provisioning-tests/README.md) for detailed testing documentation.
+See [bare-metal/provisioning-tests/README.md](bare-metal/provisioning-tests/README.md) for detailed testing documentation.
 
 ## 🤝 Contributing
 
@@ -153,7 +153,7 @@ Contributions are welcome! This project is designed for iterative growth:
 ### Development Workflow
 ```bash
 # Test your changes
-cd provisioning-tests
+cd bare-metal/provisioning-tests
 ./run-all-tests.sh
 
 # Lint Ansible playbooks

@@ -16,17 +16,17 @@ Vagrant.configure("2") do |config|
     nas.vm.network "forwarded_port", guest: 9000, host: 9000    # Portainer
     nas.vm.network "forwarded_port", guest: 445, host: 445      # Samba (if enabled)
     
-    # Resource allocation to simulate GMKTec NucBox G9
+    # Resource allocation to simulate GMKTec NucBox G9 (actual: 12GB RAM, 3x 4TB NVMe SSDs)
     nas.vm.provider "virtualbox" do |vb|
-      vb.memory = "4096"  # 4GB RAM
+      vb.memory = "4096"  # 4GB RAM (scaled down for testing)
       vb.cpus = 4         # Quad core
       vb.name = "ragna-nas-server"
       
-      # Create 3 additional disks for ZFS testing and storage
+      # Create 3 NVMe SSDs to simulate 4TB NVMe 2280 form factor storage
       (1..3).each do |i|
-        disk_file = "./zfs-disk-#{i}.vdi"
+        disk_file = "./nvme-ssd-#{i}.vdi"
         unless File.exist?(disk_file)
-          vb.customize ["createhd", "--filename", disk_file, "--size", 10240] # 10GB each
+          vb.customize ["createhd", "--filename", disk_file, "--size", 10240] # 10GB each (scaled down from 4TB)
         end
         vb.customize ["storageattach", :id, "--storagectl", "SCSI", "--port", i + 1, "--device", 0, "--type", "hdd", "--medium", disk_file]
       end
@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
     
     # Provision with Ansible
     nas.vm.provision "ansible" do |ansible|
-      ansible.playbook = "../../bare-metal/ragna-nas/zimaos-nas/playbooks/site.yml"
+      ansible.playbook = "../ragna-nas/zimaos-nas/playbooks/site.yml"
       ansible.inventory_path = "inventory.ini"
       ansible.verbose = "v"
       ansible.extra_vars = {

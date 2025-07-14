@@ -85,19 +85,19 @@ Create additional virtual disks to simulate the NAS storage configuration:
 # Create storage directory
 mkdir -p ~/VirtualBox\ VMs/ragna-nas-test/storage
 
-# Create first data disk (10GB)
-VBoxManage createhd --filename ~/VirtualBox\ VMs/ragna-nas-test/storage/data-disk-1.vdi --size 10240
+# Create first NVMe SSD (40GB to simulate 4TB NVMe SSD)
+VBoxManage createhd --filename ~/VirtualBox\ VMs/ragna-nas-test/storage/nvme-ssd-1.vdi --size 40960
 
-# Create second data disk (10GB)
-VBoxManage createhd --filename ~/VirtualBox\ VMs/ragna-nas-test/storage/data-disk-2.vdi --size 10240
+# Create second NVMe SSD (40GB to simulate 4TB NVMe SSD)
+VBoxManage createhd --filename ~/VirtualBox\ VMs/ragna-nas-test/storage/nvme-ssd-2.vdi --size 40960
 
-# Create third data disk (10GB)
-VBoxManage createhd --filename ~/VirtualBox\ VMs/ragna-nas-test/storage/data-disk-3.vdi --size 10240
+# Create third NVMe SSD (40GB to simulate 4TB NVMe SSD)
+VBoxManage createhd --filename ~/VirtualBox\ VMs/ragna-nas-test/storage/nvme-ssd-3.vdi --size 40960
 
-# Attach disks to VM
-VBoxManage storageattach "ragna-nas-test" --storagectl "SATA" --port 1 --device 0 --type hdd --medium ~/VirtualBox\ VMs/ragna-nas-test/storage/data-disk-1.vdi
-VBoxManage storageattach "ragna-nas-test" --storagectl "SATA" --port 2 --device 0 --type hdd --medium ~/VirtualBox\ VMs/ragna-nas-test/storage/data-disk-2.vdi
-VBoxManage storageattach "ragna-nas-test" --storagectl "SATA" --port 3 --device 0 --type hdd --medium ~/VirtualBox\ VMs/ragna-nas-test/storage/data-disk-3.vdi
+# Attach NVMe SSDs to VM (simulating NVMe 2280 form factor)
+VBoxManage storageattach "ragna-nas-test" --storagectl "SATA" --port 1 --device 0 --type hdd --medium ~/VirtualBox\ VMs/ragna-nas-test/storage/nvme-ssd-1.vdi
+VBoxManage storageattach "ragna-nas-test" --storagectl "SATA" --port 2 --device 0 --type hdd --medium ~/VirtualBox\ VMs/ragna-nas-test/storage/nvme-ssd-2.vdi
+VBoxManage storageattach "ragna-nas-test" --storagectl "SATA" --port 3 --device 0 --type hdd --medium ~/VirtualBox\ VMs/ragna-nas-test/storage/nvme-ssd-3.vdi
 ```
 
 ### 4. Start the VM
@@ -189,6 +189,128 @@ network:
 Apply configuration:
 ```bash
 sudo netplan apply
+```
+
+### 5. Configure WiFi Connection (Optional)
+
+If you need to connect Ubuntu Server to WiFi (useful for laptops or when Ethernet is not available):
+
+#### Check WiFi Hardware
+```bash
+# Check for WiFi interfaces
+ip link show
+
+# Check WiFi hardware
+lshw -C network
+
+# Check wireless extensions
+iwconfig
+```
+
+#### Install WiFi Tools
+```bash
+# Install wireless tools
+sudo apt update
+sudo apt install -y wireless-tools wpasupplicant
+
+# For WPA3 support (optional)
+sudo apt install -y wpa-supplicant
+```
+
+#### Configure WiFi with Netplan
+```bash
+# Edit netplan configuration
+sudo nano /etc/netplan/00-installer-config.yaml
+```
+
+Example WiFi configuration:
+```yaml
+network:
+  version: 2
+  wifis:
+    wlp3s0:  # Check your WiFi interface name with 'ip link'
+      dhcp4: true
+      access-points:
+        "Your-WiFi-Network-Name":
+          password: "your-wifi-password"
+      # Optional: static IP configuration
+      # dhcp4: false
+      # addresses:
+      #   - 192.168.1.151/24
+      # gateway4: 192.168.1.1
+      # nameservers:
+      #   addresses:
+      #     - 1.1.1.1
+      #     - 8.8.8.8
+
+  # Keep ethernet configuration if needed
+  ethernets:
+    enp0s3:
+      dhcp4: true
+```
+
+For WPA3 or enterprise networks:
+```yaml
+network:
+  version: 2
+  wifis:
+    wlp3s0:
+      dhcp4: true
+      access-points:
+        "Enterprise-Network":
+          auth:
+            key-management: eap
+            method: ttls
+            anonymous-identity: "anonymous@university.edu"
+            identity: "your-username@university.edu"
+            password: "your-password"
+```
+
+#### Apply WiFi Configuration
+```bash
+# Generate and apply configuration
+sudo netplan generate
+sudo netplan apply
+
+# Check connection status
+ip addr show
+iwconfig
+
+# Test connectivity
+ping google.com
+```
+
+#### Troubleshooting WiFi Issues
+```bash
+# Restart networking service
+sudo systemctl restart systemd-networkd
+
+# Check WiFi status
+sudo wpa_cli status
+
+# Scan for available networks
+sudo iwlist scan | grep ESSID
+
+# Check system logs
+sudo journalctl -u systemd-networkd -f
+
+# Reset network configuration if needed
+sudo netplan --debug apply
+```
+
+#### Alternative: Manual WiFi Setup
+If netplan doesn't work, use wpa_supplicant directly:
+
+```bash
+# Create WPA supplicant configuration
+sudo wpa_passphrase "Your-WiFi-Network" "your-password" | sudo tee /etc/wpa_supplicant/wpa_supplicant.conf
+
+# Connect manually
+sudo wpa_supplicant -B -i wlp3s0 -c /etc/wpa_supplicant/wpa_supplicant.conf
+sudo dhclient wlp3s0
+
+# Make it persistent
+sudo systemctl enable wpa_supplicant@wlp3s0.service
 ```
 
 ## 🏗️ Ansible Testing Setup

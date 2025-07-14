@@ -53,7 +53,7 @@ molecule --version
 
 **Usage**:
 ```bash
-cd provisioning-tests/ragna-lab-sidekick
+cd bare-metal/provisioning-tests/ragna-lab-sidekick
 
 # Start the test environment
 vagrant up
@@ -87,7 +87,7 @@ vagrant destroy -f
 
 **Usage**:
 ```bash
-cd provisioning-tests/ragna-nas
+cd bare-metal/provisioning-tests/ragna-nas
 
 # Start the test environment
 vagrant up
@@ -115,7 +115,7 @@ Molecule provides advanced testing capabilities for individual Ansible roles wit
 
 **Usage**:
 ```bash
-cd provisioning-tests
+cd bare-metal/provisioning-tests
 
 # Run full molecule test cycle
 molecule test
@@ -138,7 +138,7 @@ molecule login
 vim ../ragna-nas/zimaos-nas/roles/docker/tasks/main.yml
 
 # 2. Test with molecule (fast feedback)
-cd provisioning-tests
+cd bare-metal/provisioning-tests
 molecule test
 
 # 3. Test full scenario with Vagrant
@@ -194,7 +194,7 @@ echo "All tests completed successfully!"
 ### test-ragna-nas.sh
 ```bash
 #!/bin/bash
-cd provisioning-tests/ragna-nas
+cd bare-metal/provisioning-tests/ragna-nas
 vagrant up
 echo "NAS services available at:"
 echo "- ZimaOS: http://localhost:8080"
