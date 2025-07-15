@@ -6,6 +6,12 @@
 
 RagnaNano Lab is a comprehensive homelab automation platform designed for power-efficient, scalable infrastructure management. The project leverages modern DevOps practices to create a production-ready homelab environment.
 
+
+
+
+
+
+
 ### 🎯 Core Objectives
 - **Infrastructure as Code**: Full automation using Ansible playbooks
 - **Modular Architecture**: Component-based design for easy scaling
@@ -20,6 +26,29 @@ RagnaNano Lab is a comprehensive homelab automation platform designed for power-
 - **Virtualization**: ProxMox and Kubernetes for workload management
 - **Testing Framework**: Vagrant-based validation environment
 
+## 📸 Lab Gallery
+
+### Physical Infrastructure Setup
+
+<div align="center">
+
+**Front View - Rack Assembly**
+![RagnaNano Lab Front View](pics/ragna-nano-lab-front.jpeg)
+
+**Angled View - Component Layout**
+![RagnaNano Lab Angle View](pics/ragna-nano-lab-angle.jpeg)
+
+**Back View - Connectivity & Cables**
+![RagnaNano Lab Back View](pics/ragna-nano-lab-back.jpeg)
+
+</div>
+
+The RagnaNano Lab features a compact rack-mounted design with:
+- **GMKTec NucBox G9 NAS** (12GB RAM, 3x 4TB NVMe SSDs) - Primary storage and services
+- **Raspberry Pi 3B fleet** - Distributed computing and CI/CD
+- **D-Link DGS-1100-08V2** - Managed network switch with VLAN support
+- **GeeekPi DeskPi RackMate TT** - Mini server cabinet for organized deployment
+- **Glitfix 500W USB-C** - Centralized power distribution
 
 ## 🚀 Quick Start
 

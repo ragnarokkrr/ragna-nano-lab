@@ -153,6 +153,9 @@ sudo usermod -aG sudo ansible
 
 # Set up SSH keys (copy from host)
 ssh-copy-id ubuntu@192.168.1.150
+# or for a NAT configuration (copy from host)
+ssh-copy-id -p 2222 ubuntu@127.0.0.1
+
 sudo mkdir -p /home/ansible/.ssh
 sudo cp /home/ubuntu/.ssh/authorized_keys /home/ansible/.ssh/
 sudo chown -R ansible:ansible /home/ansible/.ssh
